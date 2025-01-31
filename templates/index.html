@@ -38,7 +38,7 @@
             width: 30%;
             text-align: right;
         }
-        .form-group input {
+        .form-group input, .form-group select {
             width: 60%;
             padding: 8px;
             border-radius: 5px;
@@ -95,6 +95,20 @@
             <div class="form-group">
                 <label for="word">Insert Word:</label>
                 <input type="text" name="word" placeholder="Optional">
+            </div>
+            <div class="form-group">
+                <label for="text_position">Text Position:</label>
+                <select name="text_position">
+                    <option value="TOP_LEFT">Top Left</option>
+                    <option value="TOP_CENTER">Top Center</option>
+                    <option value="TOP_RIGHT">Top Right</option>
+                    <option value="MID_LEFT">Middle Left</option>
+                    <option value="MID_CENTER">Middle Center</option>
+                    <option value="MID_RIGHT">Middle Right</option>
+                    <option value="LOW_LEFT">Bottom Left</option>
+                    <option value="LOW_CENTER">Bottom Center</option>
+                    <option value="LOW_RIGHT">Bottom Right</option>
+                </select>
             </div>
             <button type="submit">Convert to ASCII</button>
         </form>
