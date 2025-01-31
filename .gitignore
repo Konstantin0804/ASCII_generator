@@ -1,0 +1,9 @@
+.idea
+venv
+.env
+*.log
+*.pkg
+*.pyc
+uploads
+output_ascii_image.jpg
+uploaded_image.jpg
