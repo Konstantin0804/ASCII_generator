@@ -91,6 +91,15 @@ def insert_word_into_ascii(ascii_art, word):
 
     return '\n'.join(lines)
 
+def clear_uploads_folder():
+    for filename in os.listdir(app.config['UPLOAD_FOLDER']):
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        try:
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+        except Exception as e:
+            print(f"Error deleting file {filename}: {e}")
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -108,6 +117,7 @@ def index():
                 ascii_art, cols, rows = convert_image_to_ascii(image, ascii_chars, height)
                 if word:
                     ascii_art = insert_word_into_ascii(ascii_art, word)
+                clear_uploads_folder()
             except Exception as e:
                 ascii_art = f"Error: {e}"
 
