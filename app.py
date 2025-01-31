@@ -276,7 +276,7 @@ def index():
     if request.method == "POST":
         file = request.files.get("file")  # Get uploaded image file
         height = int(request.form.get("height", 50))  # Get desired output height
-        ascii_chars = list(request.form.get("ascii_chars", "".join(DEFAULT_ASCII_CHARS)))  # Convert ASCII chars to list
+        ascii_chars = list(request.form.get("ascii_chars")) + DEFAULT_ASCII_CHARS # Convert ASCII chars to list
         word = request.form.get("word", "").strip()  # Word to insert (if any)
         text_position = request.form.get("text_position", "MID_CENTER")  # Default text position
 
