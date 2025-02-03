@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASCII Art Converter</title>
-    <!-- Подключение шрифта IBM Plex Mono через Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'IBM Plex Mono', monospace;  /* Применяем шрифт IBM Plex Mono */
+            font-family: 'IBM Plex Mono', monospace;
             margin: 20px;
             text-align: center;
             background: linear-gradient(to bottom, #2c3e50, #bdc3c7);
@@ -52,7 +51,7 @@
         textarea {
             width: auto;
             max-width: 100%;
-            font-family: 'IBM Plex Mono', monospace;  /* Применяем шрифт IBM Plex Mono */
+            font-family: 'IBM Plex Mono', monospace;
             font-size: 10px;
             white-space: pre;
             overflow: auto;
@@ -79,10 +78,10 @@
 <body>
     <div class="container">
         <h1>ASCII Art Converter</h1>
-        <form method="post" enctype="multipart/form-data">
+        <form id="asciiForm" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="file">Choose Image:</label>
-                <input type="file" name="file" required>
+                <input type="file" name="file" id="fileInput" required>
             </div>
             <div class="form-group">
                 <label for="height">Output Height:</label>
@@ -90,7 +89,7 @@
             </div>
             <div class="form-group">
                 <label for="ascii_chars">ASCII Characters:</label>
-                <input type="text" name="ascii_chars" placeholder="Optional" style="width: 100%;">
+                <input type="text" name="ascii_chars" placeholder="Optional, min 6 chars" style="width: 100%;">
             </div>
             <div class="form-group">
                 <label for="word">Insert Word:</label>
@@ -113,7 +112,39 @@
             <button type="submit">Convert to ASCII</button>
         </form>
         <h2>ASCII Art Output:</h2>
-        <textarea readonly rows="{{ rows }}" cols="{{ cols }}">{{ ascii_art }}</textarea>
+        <textarea id="asciiOutput" readonly rows="20" cols="60"></textarea>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("asciiForm");
+            const asciiOutput = document.getElementById("asciiOutput");
+
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                const formData = new FormData(form);
+
+                fetch("/", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())  // Получаем JSON-ответ
+                .then(data => {
+                    if (data.ascii_art) {
+                        asciiOutput.value = data.ascii_art;  // Вставляем ASCII-арт
+                        // Настроим размеры textarea в соответствии с cols и rows
+                        asciiOutput.cols = data.cols;
+                        asciiOutput.rows = data.rows;
+                    } else if (data.error) {
+                        console.error("Error:", data.error);  // Если ошибка, выводим ее
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+            });
+        });
+    </script>
 </body>
 </html>

@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from PIL import Image, ImageFilter
 import os
 import random
-import io
+
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -259,7 +259,7 @@ def insert_word_into_ascii(ascii_art, word, position='MID_CENTER'):
     return '\n'.join(lines)
 
 
-def clear_uploads_folder():
+def clear_old_uploads():
     for filename in os.listdir(app.config['UPLOAD_FOLDER']):
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         try:
@@ -274,16 +274,24 @@ def index():
     ascii_art = ""
     cols, rows = 80, 25  # Default values for columns and rows
     if request.method == "POST":
-        file = request.files.get("file")  # Get uploaded image file
-        height = int(request.form.get("height", 50))  # Get desired output height
-        ascii_chars = list(request.form.get("ascii_chars")) + DEFAULT_ASCII_CHARS # Convert ASCII chars to list
-        word = request.form.get("word", "").strip()  # Word to insert (if any)
-        text_position = request.form.get("text_position", "MID_CENTER")  # Default text position
+        clear_old_uploads()
+
+        file = request.files.get("file")
+        height = int(request.form.get("height", 50))
+        ascii_chars = list(request.form.get("ascii_chars")) if len(request.form.get("ascii_chars")) > 0 else DEFAULT_ASCII_CHARS
+        word = request.form.get("word", "").strip()
+        text_position = request.form.get("text_position", "MID_CENTER")
 
         if file:
+            # Saving file in uploads folder
+            filename = file.filename
+            uploaded_file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            if not os.path.exists(uploaded_file_path):
+                file.save(uploaded_file_path)
+
             try:
                 # Read and process the uploaded image
-                image = Image.open(io.BytesIO(file.read()))
+                image = Image.open(uploaded_file_path)
 
                 # Convert image to ASCII art
                 ascii_art, cols, rows = convert_image_to_ascii(image, ascii_chars, height)
@@ -291,14 +299,16 @@ def index():
                 # If a word is provided, insert it into the ASCII art
                 if word:
                     ascii_art = insert_word_into_ascii(ascii_art, word, text_position)
-
-                # Clear the uploads folder to remove the uploaded file
-                clear_uploads_folder()
+                return jsonify({
+                    "ascii_art": ascii_art,
+                    "cols": cols,
+                    "rows": rows
+                })
             except Exception as e:
                 ascii_art = f"Error: {e}"  # If error occurs, show it
 
+    # Send ASCII art as plain text in response, not HTML
     return render_template("index.html", ascii_art=ascii_art, cols=cols, rows=rows)
-
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
