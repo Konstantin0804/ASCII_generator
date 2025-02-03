@@ -2,7 +2,7 @@ Converts an image into ASCII symbols with a minimalistic interface
 
 Build with docker:
 ```bash
-$ docker build --platform=linux/amd64 -t flask-ascii-app .
+$ docker build --platform=linux/amd64 -t diemydiesel/testing-repo:flask-ascii-app .
 ```
 
 ```bash

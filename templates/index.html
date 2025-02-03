@@ -89,7 +89,7 @@
             </div>
             <div class="form-group">
                 <label for="ascii_chars">ASCII Characters:</label>
-                <input type="text" name="ascii_chars" placeholder="Optional, min 6 chars" style="width: 100%;">
+                <input type="text" name="ascii_chars" placeholder="Optional, min 6 chars">
             </div>
             <div class="form-group">
                 <label for="word">Insert Word:</label>
@@ -129,15 +129,14 @@
                     method: "POST",
                     body: formData
                 })
-                .then(response => response.json())  // Получаем JSON-ответ
+                .then(response => response.json())
                 .then(data => {
                     if (data.ascii_art) {
-                        asciiOutput.value = data.ascii_art;  // Вставляем ASCII-арт
-                        // Настроим размеры textarea в соответствии с cols и rows
+                        asciiOutput.value = data.ascii_art;
                         asciiOutput.cols = data.cols;
                         asciiOutput.rows = data.rows;
                     } else if (data.error) {
-                        console.error("Error:", data.error);  // Если ошибка, выводим ее
+                        console.error("Error:", data.error);
                     }
                 })
                 .catch(error => {
