@@ -7,6 +7,6 @@ $ docker build --platform=linux/amd64 -t diemydiesel/testing-repo:flask-ascii-ap
 
 ```bash
 Run with docker:
-$ docker run -d -p 5000:5000 --name flask-container flask-ascii-app
+$ docker run -d -p 5000:5000 --name flask-container diemydiesel/testing-repo:flask-ascii-app
 ```
 Navigate to http://127.0.0.1:5000
