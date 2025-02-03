@@ -1,10 +1,13 @@
-from flask import Flask, render_template, request, jsonify
+from audioop import cross
+
+from flask import Flask, request, jsonify
 from PIL import Image, ImageFilter
 import os
 import random
-
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
@@ -298,16 +301,16 @@ def index():
                 # If a word is provided, insert it into the ASCII art
                 if word:
                     ascii_art = insert_word_into_ascii(ascii_art, word, text_position)
-                return jsonify({
-                    "ascii_art": ascii_art,
-                    "cols": cols,
-                    "rows": rows
-                })
+
             except Exception as e:
                 ascii_art = f"Error: {e}"  # If error occurs, show it
 
     # Send ASCII art as plain text in response, not HTML
-    return render_template("index.html", ascii_art=ascii_art, cols=cols, rows=rows)
+    return jsonify({
+                    "ascii_art": ascii_art,
+                    "cols": cols,
+                    "rows": rows
+                })
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')

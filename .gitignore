@@ -7,3 +7,5 @@ venv
 uploads
 output_ascii_image.jpg
 uploaded_image.jpg
+ascii_interface/node_modules
+ascii_interface/package-lock.json

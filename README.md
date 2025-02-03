@@ -1,12 +1,5 @@
 Converts an image into ASCII symbols with a minimalistic interface
 
-Build with docker:
-```bash
-$ docker build --platform=linux/amd64 -t diemydiesel/testing-repo:flask-ascii-app .
-```
+docker compose up --build
 
-```bash
-Run with docker:
-$ docker run -d -p 5000:5000 --name flask-container diemydiesel/testing-repo:flask-ascii-app
-```
-Navigate to http://127.0.0.1:5000
+Navigate to http://127.0.0.1:3000

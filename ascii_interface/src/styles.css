@@ -1,0 +1,109 @@
+html, body {
+    height: 100%; /* Убедимся, что html и body занимают всю высоту экрана */
+}
+
+body {
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 20px; /* Оставляем отступы только внутри контейнера */
+    text-align: center;
+    background: linear-gradient(to bottom, #2c3e50, #bdc3c7);
+    color: white;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Размещаем все элементы сверху */
+    background-attachment: fixed;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 15px; /* Увеличим отступы между полями */
+    align-items: center;
+}
+
+.form-group label {
+    margin-right: 10px;
+    width: 30%; /* Обеспечиваем правильную ширину для label */
+    text-align: right;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 70%; /* Ширина полей ввода */
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background: white;
+    color: black;
+    box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+    color: #ddd;
+}
+
+/* Стиль для контейнера, который содержит весь интерфейс */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%; /* Ограничивает ширину */
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Стиль для контейнера вывода ASCII-арта */
+.output-container {
+  width: auto; /* Разрешаем контейнеру быть гибким по ширине */
+  max-width: 90%; /* Устанавливаем максимальную ширину, например 90% от родителя */
+  min-width: 300px; /* Минимальная ширина, чтобы не сжимался слишком сильно */
+  margin: 10px auto;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6); /* Полупрозрачный фон */
+  border-radius: 10px;
+  overflow: auto; /* Добавляем прокрутку, если контент не помещается */
+  box-sizing: border-box;
+  text-align: center; /* Центрируем текст */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Стиль для textarea */
+textarea {
+  width: 100%; /* Занимает всю доступную ширину контейнера */
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  white-space: pre; /* Сохраняет форматирование текста: пробелы и переносы строк */
+  overflow-x: auto; /* Добавляет горизонтальную прокрутку, если нужно */
+  overflow-y: auto; /* Добавляет вертикальную прокрутку, если нужно */
+  resize: none; /* Отключаем возможность изменять размер вручную */
+  background: white;
+  color: black;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  box-sizing: border-box; /* Учитывает padding при расчете ширины */
+  word-wrap: break-word; /* Разрывает слова, если они длинные */
+}
+
+input, button {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+button {
+    margin: 5px;
+}
+
+textarea:focus, input:focus, select:focus {
+    outline: none; /* Убираем рамку фокуса */
+    border: 1px solid #3498db; /* Подсвечиваем фокус синим цветом */
+}
