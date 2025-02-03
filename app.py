@@ -286,8 +286,7 @@ def index():
             # Saving file in uploads folder
             filename = file.filename
             uploaded_file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            if not os.path.exists(uploaded_file_path):
-                file.save(uploaded_file_path)
+            file.save(uploaded_file_path)
 
             try:
                 # Read and process the uploaded image
